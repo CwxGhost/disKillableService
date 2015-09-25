@@ -8,13 +8,14 @@
 #include <sys/ptrace.h>
 #include <fcntl.h>
 
+static int ok = -1;
+
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native", __VA_ARGS__))
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "native", __VA_ARGS__))
 
-static int ok = -1;
-
 void handler(int signo) {
+	int p = getpid();
 	if (ok == 1) {
 		pid_t pid = fork();
 		LOGI("success handler pid->%d\n", pid);
